@@ -59,6 +59,7 @@ export interface ScrollExpandProps {
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
+  customMedia?: ReactNode;
   [key: string]: unknown;
 }
 
@@ -86,6 +87,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   titleWidthPadding = 0,
   onThemeChange,
   children,
+  customMedia,
   className = '',
   style,
   ...rest
@@ -602,27 +604,33 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     };
   }, [applyProgress, useWindowScroll, measureDimensions]);
 
-  const media =
-    mediaType === 'video' ? (
-      <video
-        ref={mediaRef as unknown as React.RefObject<HTMLVideoElement>}
-        className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
-        src={src}
-        poster={poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
-    ) : (
-      <img
-        ref={mediaRef as unknown as React.RefObject<HTMLImageElement>}
-        className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
-        src={src}
-        alt={alt}
-        draggable={false}
-      />
-    );
+  const media = customMedia ? (
+    <div
+      ref={mediaRef as unknown as React.RefObject<HTMLDivElement>}
+      className="absolute inset-0 w-full h-full origin-center select-none [will-change:transform]"
+    >
+      {customMedia}
+    </div>
+  ) : mediaType === 'video' ? (
+    <video
+      ref={mediaRef as unknown as React.RefObject<HTMLVideoElement>}
+      className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
+      src={src}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+    />
+  ) : (
+    <img
+      ref={mediaRef as unknown as React.RefObject<HTMLImageElement>}
+      className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
+      src={src}
+      alt={alt}
+      draggable={false}
+    />
+  );
 
   return (
     <div

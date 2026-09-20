@@ -1,7 +1,35 @@
 "use client";
 
 import ScrollExpand from "@/components/ScrollExpand";
+import MorphSlider, { MorphItem } from "@/components/MorphSlider";
 import { ArrowRight } from "@phosphor-icons/react";
+
+const HERO_MORPH_ITEMS: MorphItem[] = [
+  {
+    image: "/Hero.jpeg",
+    caption: "Mindful Movement Sanctuary",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1600&q=80",
+    caption: "Breath-Led Movement on Cedar",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80",
+    caption: "Vinyasa & Prana Sanctuary",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1600&q=80",
+    caption: "432Hz Sound Sanctuary",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1600&q=80",
+    caption: "Ceremonial Uji Matcha",
+  },
+];
 
 export default function HeroSection() {
   return (
@@ -16,6 +44,24 @@ export default function HeroSection() {
       <ScrollExpand
         src="/Hero.jpeg"
         alt="Mindful movement sanctuary at Body × Poetry"
+        customMedia={
+          <MorphSlider
+            items={HERO_MORPH_ITEMS}
+            autoplay={true}
+            autoplayDelay={4.5}
+            transition="melt"
+            duration={1.2}
+            intensity={0.45}
+            scale={2.0}
+            aberration={0.01}
+            drift={0.3}
+            radius={0}
+            showCaptions={false}
+            showControls={false}
+            showIndicators={false}
+            className="w-full h-full pointer-events-none"
+          />
+        }
         useWindowScroll={true}
         matchTitleWidth={true}
         titleWidthPadding={80}
