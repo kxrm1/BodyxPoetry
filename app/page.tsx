@@ -12,7 +12,9 @@ export default function Home() {
       <HeroSection />
       <ManifestoSection />
       <ActivitiesSection />
-      <GatheringSection />
+      <div className="relative w-full bg-[#24331C]">
+        <GatheringSection />
+      </div>
       <CtaRevealSection />
     </main>
   );

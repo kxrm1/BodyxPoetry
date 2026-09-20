@@ -56,13 +56,13 @@ export default function CtaRevealSection() {
     const inner = innerRef.current;
     if (!container || !content) return;
 
-    // Reset initial hidden state
+    // Initialize content inside container with matcha green background visible
     gsap.set(content, {
       position: "absolute",
       top: 0,
       left: 0,
       width: "100%",
-      visibility: "hidden",
+      visibility: "visible",
       pointerEvents: "none",
       zIndex: 10,
     });
@@ -99,14 +99,14 @@ export default function CtaRevealSection() {
             y: 0,
           });
         } else {
-          // Above section: hide completely so it never shows through earlier sections
+          // Above section: keep absolute at top of container with zero flash
           gsap.set(content, {
             position: "absolute",
             top: 0,
             bottom: "auto",
             left: 0,
             width: "100%",
-            visibility: "hidden",
+            visibility: "visible",
             pointerEvents: "none",
             zIndex: 10,
             y: 0,
@@ -165,7 +165,7 @@ export default function CtaRevealSection() {
     <div
       ref={containerRef}
       id="ticket-container"
-      className="relative w-full z-10"
+      className="relative w-full z-10 bg-[#24331C]"
       style={{
         height: contentHeight ? `${contentHeight}px` : "auto",
         minHeight: "100vh",
@@ -178,7 +178,7 @@ export default function CtaRevealSection() {
           position: "absolute",
           top: 0,
           left: 0,
-          visibility: "hidden",
+          visibility: "visible",
           willChange: "transform",
         }}
       >
