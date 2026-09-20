@@ -340,7 +340,7 @@ export default function GatheringSection() {
     <section
       id="details"
       ref={sectionRef}
-      className="relative z-20 py-20 md:py-32 bg-[#FAF7F2] text-fg px-4 sm:px-6 md:px-12 overflow-hidden transition-colors duration-1000 select-none rounded-b-[2.5rem] sm:rounded-b-[3.5rem] md:rounded-b-[4.5rem] shadow-[0_45px_75px_-10px_rgba(0,0,0,0.22)]"
+      className="relative z-20 py-20 md:py-32 bg-[#FAF7F2] text-fg px-4 sm:px-6 md:px-12 overflow-hidden transition-colors duration-1000 select-none rounded-b-[2.5rem] sm:rounded-b-[3.5rem] md:rounded-b-[4.5rem]"
     >
       {/* Dynamic atmospheric ambient glow linked to the active sun position */}
       <div

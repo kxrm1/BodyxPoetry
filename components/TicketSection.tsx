@@ -36,12 +36,6 @@ export default function TicketSection() {
       id="ticket"
       className="relative z-20 w-full bg-[#24331C] text-cream pt-20 sm:pt-28 md:pt-32 pb-20 sm:pb-28 px-6 sm:px-10 lg:px-16 overflow-hidden select-none scroll-mt-12"
     >
-      {/* Subtle organic film grain texture overlay */}
-      <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-10 mix-blend-overlay bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+')]" />
-
-      {/* Atmospheric ambient matcha glow */}
-      <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[65vw] h-[35vw] rounded-full bg-[#8B9E6B]/15 blur-[160px] pointer-events-none" />
-
       <div className="max-w-4xl mx-auto relative z-20">
         {/* Simple Ticket Sale Section */}
         <div className="text-center mb-16 sm:mb-24">
