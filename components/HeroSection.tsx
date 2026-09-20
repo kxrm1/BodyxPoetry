@@ -49,6 +49,9 @@ export default function HeroSection() {
             items={HERO_MORPH_ITEMS}
             autoplay={true}
             autoplayDelay={4.5}
+            loop={true}
+            pauseOnHover={false}
+            draggable={false}
             transition="melt"
             duration={1.2}
             intensity={0.45}

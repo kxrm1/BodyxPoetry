@@ -41,6 +41,8 @@ export interface MorphSliderProps {
   autoplay?: boolean;
   autoplayDelay?: number;
   loop?: boolean;
+  pauseOnHover?: boolean;
+  draggable?: boolean;
   radius?: number;
   overlayColor?: string;
   showCaptions?: boolean;
@@ -545,6 +547,10 @@ class MorphEngine {
     this.announce(target);
   }
 
+  isBusy(): boolean {
+    return this.animating || this.dragging;
+  }
+
   next(): void {
     this.goTo(1);
   }
@@ -655,6 +661,8 @@ const MorphSlider = forwardRef<MorphSliderRef, MorphSliderProps>(
       autoplay = false,
       autoplayDelay = 4,
       loop = true,
+      pauseOnHover = false,
+      draggable = true,
       radius = 16,
       overlayColor = "#000000",
       showCaptions = true,
@@ -750,16 +758,54 @@ const MorphSlider = forwardRef<MorphSliderRef, MorphSliderProps>(
     const handleNext = useCallback(() => engineRef.current?.next(), []);
     const handlePrev = useCallback(() => engineRef.current?.prev(), []);
 
+    const hoveringRef = useRef(false);
+    hoveringRef.current = hovering;
+
+    // Resilient, self-healing infinite autoplay cycle
     useEffect(() => {
-      if (!autoplay || hovering) return undefined;
-      const id = window.setTimeout(
-        () => engineRef.current?.next(),
-        Math.max(autoplayDelay, 1) * 1000
-      );
-      return () => window.clearTimeout(id);
-    }, [autoplay, autoplayDelay, hovering, index]);
+      if (!autoplay) return undefined;
+
+      const delayMs = Math.max(autoplayDelay, 1) * 1000;
+      let mainTimer: ReturnType<typeof setTimeout> | null = null;
+      let retryTimer: ReturnType<typeof setTimeout> | null = null;
+      let isCancelled = false;
+
+      const attemptNext = () => {
+        if (isCancelled) return;
+
+        // If pauseOnHover is enabled and user is hovering, re-check in 800ms
+        if (pauseOnHover && hoveringRef.current) {
+          retryTimer = setTimeout(attemptNext, 800);
+          return;
+        }
+
+        const engine = engineRef.current;
+        if (!engine) {
+          retryTimer = setTimeout(attemptNext, 400);
+          return;
+        }
+
+        if (engine.isBusy()) {
+          // If animating or dragging, retry in 400ms instead of permanently halting
+          retryTimer = setTimeout(attemptNext, 400);
+          return;
+        }
+
+        // Advance to next image in the infinite cycle (0 -> 1 -> ... -> n-1 -> 0)
+        engine.next();
+      };
+
+      mainTimer = setTimeout(attemptNext, delayMs);
+
+      return () => {
+        isCancelled = true;
+        if (mainTimer) clearTimeout(mainTimer);
+        if (retryTimer) clearTimeout(retryTimer);
+      };
+    }, [autoplay, autoplayDelay, pauseOnHover, hovering, index]);
 
     useEffect(() => {
+      if (!draggable) return undefined;
       const el = containerRef.current;
       if (!el) return undefined;
       let startX = 0;
@@ -802,7 +848,7 @@ const MorphSlider = forwardRef<MorphSliderRef, MorphSliderProps>(
         el.removeEventListener("pointerup", onUp);
         el.removeEventListener("pointercancel", onUp);
       };
-    }, []);
+    }, [draggable]);
 
     const onKeyDown = useCallback(
       (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -836,12 +882,16 @@ const MorphSlider = forwardRef<MorphSliderRef, MorphSliderProps>(
       >
         <div
           ref={containerRef}
-          className="absolute inset-0 cursor-grab active:cursor-grabbing outline-none focus-visible:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.7)]"
+          className={`absolute inset-0 outline-none ${
+            draggable
+              ? "cursor-grab active:cursor-grabbing focus-visible:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.7)]"
+              : "pointer-events-none"
+          }`}
           role="group"
           aria-roledescription="carousel"
           aria-label="Image morph slider"
-          tabIndex={0}
-          onKeyDown={onKeyDown}
+          tabIndex={draggable ? 0 : -1}
+          onKeyDown={draggable ? onKeyDown : undefined}
         />
 
         {showCaptions && hasCaptions && (
