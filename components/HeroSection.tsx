@@ -76,6 +76,7 @@ export default function HeroSection() {
         curtainDistance={1.0}
         smoothing={0.04}
         overlayScrim={0.52}
+        bottomGradient={true}
         scrollHint="Scroll to expand"
         title={
           <div className="flex flex-col items-center select-none text-center">
@@ -94,7 +95,7 @@ export default function HeroSection() {
             data-hero-statement
             className="max-w-3xl text-left select-none [will-change:transform,opacity,filter]"
           >
-            <p className="font-serif font-display text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] text-cream leading-[1.08] tracking-tight font-normal">
+            <p className="font-serif font-display text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] text-cream leading-[1.08] tracking-tight font-normal [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]">
               Where mindful movement, somatic breath, and organic nourishment converge.
             </p>
           </div>
@@ -103,7 +104,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between lg:justify-end gap-6 text-left lg:text-right select-none shrink-0">
             <div
               data-hero-meta
-              className="space-y-1 [will-change:transform,opacity,filter]"
+              className="space-y-1 [will-change:transform,opacity,filter] [text-shadow:0_2px_16px_rgba(0,0,0,0.3)]"
             >
               <div className="flex items-center lg:justify-end gap-2.5 font-serif font-display text-lg sm:text-xl md:text-2xl text-sand tracking-tight">
                 <span>November 7</span>

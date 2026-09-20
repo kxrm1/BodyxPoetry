@@ -56,6 +56,8 @@ export interface ScrollExpandProps {
   matchTitleWidth?: boolean;
   titleWidthPadding?: number;
   onThemeChange?: (theme: 'dark' | 'white') => void;
+  bottomGradient?: boolean;
+  bottomGradientClassName?: string;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -86,6 +88,8 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   matchTitleWidth = false,
   titleWidthPadding = 0,
   onThemeChange,
+  bottomGradient = true,
+  bottomGradientClassName = 'bg-[linear-gradient(to_top,rgba(0,0,0,0.76)_0%,rgba(0,0,0,0.52)_28%,rgba(0,0,0,0.22)_60%,rgba(0,0,0,0.06)_82%,rgba(0,0,0,0)_100%)]',
   children,
   customMedia,
   className = '',
@@ -205,7 +209,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     }
 
     if (overlayRef.current) {
-      const inn = smoothstep(0.68, 1, p);
+      const inn = smoothstep(0.60, 0.96, p);
       overlayRef.current.style.opacity = `${inn}`;
       overlayRef.current.style.transform = `translate3d(0, ${22 * (1 - inn)}px, 0)`;
       overlayRef.current.style.pointerEvents = inn > 0.85 ? 'auto' : 'none';
@@ -656,7 +660,16 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
                   ref={overlayRef}
                   className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 md:p-12 lg:p-16 opacity-0 [will-change:opacity,transform] z-10 pointer-events-none"
                 >
-                  {children}
+                  {/* Bottom-to-top gradient behind the paragraph and button for optimal legibility */}
+                  {bottomGradient ? (
+                    <div
+                      aria-hidden="true"
+                      className={`absolute inset-x-0 -bottom-8 h-[65%] min-h-[360px] max-h-[720px] pointer-events-none ${bottomGradientClassName}`.trim()}
+                    />
+                  ) : null}
+                  <div className="relative z-10 w-full">
+                    {children}
+                  </div>
                 </div>
               ) : null}
             </div>
