@@ -66,13 +66,13 @@ export default function HeroSection() {
           />
         }
         useWindowScroll={true}
-        matchTitleWidth={true}
-        titleWidthPadding={80}
-        startWidth={75}
-        startHeight={64}
-        startRadius={32}
+        matchTitleWidth={false}
+        titleWidthPadding={0}
+        startWidth={100}
+        startHeight={100}
+        startRadius={0}
         endRadius={0}
-        mediaZoom={1.32}
+        mediaZoom={1.08}
         heroExpandedScale={1.08}
         scrollDistance={1.3}
         holdDistance={0.45}
@@ -80,12 +80,12 @@ export default function HeroSection() {
         smoothing={0.04}
         overlayScrim={0.52}
         bottomGradient={true}
-        scrollHint="Scroll to expand"
+        scrollHint="Scroll to explore"
         title={
           <div className="flex flex-col items-center select-none text-center">
             <h1
               data-title-target
-              className="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] text-white leading-[0.9] font-normal whitespace-nowrap inline-block"
+              className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] text-white leading-[0.9] font-normal tracking-tight whitespace-nowrap inline-block"
             >
               Body <span className="font-serif text-[0.8em] text-white">×</span> Poetry
             </h1>

@@ -18,7 +18,7 @@
 
   --font-serif: var(--font-editorial-serif), Georgia, serif;
   --font-display: var(--font-editorial-serif), Georgia, serif;
-  --font-script: var(--font-editorial-script), cursive;
+  --font-script: var(--font-editorial-serif), Georgia, serif;
   --font-body: var(--font-editorial-serif), Georgia, serif;
   --font-sans: var(--font-editorial-serif), Georgia, serif;
 }
@@ -34,13 +34,5 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
     font-weight: 400;
-  }
-
-  .font-script,
-  .italic,
-  em,
-  i {
-    font-family: var(--font-editorial-script), cursive;
-    font-style: normal;
   }
 }

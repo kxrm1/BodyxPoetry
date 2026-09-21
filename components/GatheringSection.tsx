@@ -365,7 +365,7 @@ export default function GatheringSection() {
             </span>
             <span
               ref={title2Ref}
-              className="font-script text-matcha-dark text-[1.14em] ml-3 sm:ml-4 font-normal inline-block [will-change:transform,filter,opacity]"
+              className="font-serif text-matcha-dark text-[1.14em] ml-3 sm:ml-4 font-normal inline-block [will-change:transform,filter,opacity]"
             >
               beneath the Ojai sun
             </span>

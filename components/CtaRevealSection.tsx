@@ -165,7 +165,7 @@ export default function CtaRevealSection() {
     <div
       ref={containerRef}
       id="ticket-container"
-      className="relative w-full z-10 bg-[#24331C]"
+      className="relative w-full z-10 bg-[#8B9E6B]"
       style={{
         height: contentHeight ? `${contentHeight}px` : "auto",
         minHeight: "100vh",
@@ -173,7 +173,7 @@ export default function CtaRevealSection() {
     >
       <div
         ref={contentRef}
-        className="w-full z-10 bg-[#24331C] text-cream overflow-hidden"
+        className="w-full z-10 bg-[#8B9E6B] text-[#1C2716] overflow-hidden"
         style={{
           position: "absolute",
           top: 0,

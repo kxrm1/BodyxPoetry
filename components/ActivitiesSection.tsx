@@ -14,7 +14,7 @@ const CHAMBERS: AccordionGalleryItem[] = [
     image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
     label: (
       <span>
-        01 · <span className="font-script text-matcha text-[1.22em] mx-1">Nami</span> · Vinyasa &amp; Prana
+        01 · <span className="font-serif text-matcha text-[1.22em] mx-1">Nami</span> · Vinyasa &amp; Prana
       </span>
     ),
     alt: "01 · Nami · Vinyasa & Prana",
@@ -23,7 +23,7 @@ const CHAMBERS: AccordionGalleryItem[] = [
     image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80",
     label: (
       <span>
-        02 · <span className="font-script text-matcha text-[1.22em] mx-1">Jiku</span> · Somatic Reform
+        02 · <span className="font-serif text-matcha text-[1.22em] mx-1">Jiku</span> · Somatic Reform
       </span>
     ),
     alt: "02 · Jiku · Somatic Reform",
@@ -32,7 +32,7 @@ const CHAMBERS: AccordionGalleryItem[] = [
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80",
     label: (
       <span>
-        03 · <span className="font-script text-matcha text-[1.22em] mx-1">Fure</span> · Restorative Bodywork
+        03 · <span className="font-serif text-matcha text-[1.22em] mx-1">Fure</span> · Restorative Bodywork
       </span>
     ),
     alt: "03 · Fure · Restorative Bodywork",
@@ -41,7 +41,7 @@ const CHAMBERS: AccordionGalleryItem[] = [
     image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80",
     label: (
       <span>
-        04 · <span className="font-script text-matcha text-[1.22em] mx-1">Hibiki</span> · 432Hz Sound Bath
+        04 · <span className="font-serif text-matcha text-[1.22em] mx-1">Hibiki</span> · 432Hz Sound Bath
       </span>
     ),
     alt: "04 · Hibiki · 432Hz Sound Bath",
@@ -50,7 +50,7 @@ const CHAMBERS: AccordionGalleryItem[] = [
     image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=80",
     label: (
       <span>
-        05 · <span className="font-script text-matcha text-[1.22em] mx-1">Cha</span> · Ceremonial Nourishment
+        05 · <span className="font-serif text-matcha text-[1.22em] mx-1">Cha</span> · Ceremonial Nourishment
       </span>
     ),
     alt: "05 · Cha · Ceremonial Nourishment",

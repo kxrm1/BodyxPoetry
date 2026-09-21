@@ -31,7 +31,7 @@ const SOCIAL_ITEMS: StaggeredMenuSocialItem[] = [
 ];
 
 export default function SiteNavigation() {
-  const [navTheme, setNavTheme] = useState<"dark" | "white">("dark");
+  const [navTheme, setNavTheme] = useState<"dark" | "white">("white");
 
   useEffect(() => {
     const handleThemeChange = (e: Event) => {

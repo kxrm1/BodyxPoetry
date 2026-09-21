@@ -36,3 +36,5 @@ next-env.d.ts
 # deployment copies
 /deploy/
 /godaddy-node-app/
+godaddy-deploy.zip
+/images/

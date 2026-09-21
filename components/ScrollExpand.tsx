@@ -188,7 +188,11 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     const currentIy = startIy * (1 - e);
     const r = c.startRadius + (c.endRadius - c.startRadius) * e;
 
-    frame.style.clipPath = `inset(${currentIy}px ${currentIx}px ${currentIy}px ${currentIx}px round ${r}px)`;
+    if (startIx === 0 && startIy === 0 && r === 0) {
+      frame.style.clipPath = 'none';
+    } else {
+      frame.style.clipPath = `inset(${currentIy}px ${currentIx}px ${currentIy}px ${currentIx}px round ${r}px)`;
+    }
 
     const targetExpandedScale = c.heroExpandedScale ?? 1.08;
     media.style.transform = `scale(${c.mediaZoom + (targetExpandedScale - c.mediaZoom) * e})`;
@@ -290,21 +294,22 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
       const ctx = gsap.context(() => {
         const hasScrolled = typeof window !== 'undefined' && window.scrollY > 15;
 
+        const isFullScreenHero = c.startWidth >= 100 && c.startHeight >= 100;
+
         if (hasScrolled) {
           isIntroActiveRef.current = false;
           applyProgress(0);
-          updateNavTheme('dark');
+          updateNavTheme(isFullScreenHero ? 'white' : 'dark');
         } else {
           isIntroActiveRef.current = true;
-          updateNavTheme('dark');
+          updateNavTheme(isFullScreenHero ? 'white' : 'dark');
 
           // 1. Initial State before entrance begins:
-          // The hero image starts edge-to-edge / uncropped (white edges not framed yet)
           if (frameRef.current) {
-            frameRef.current.style.clipPath = 'inset(0px 0px 0px 0px round 0px)';
+            frameRef.current.style.clipPath = isFullScreenHero ? 'none' : 'inset(0px 0px 0px 0px round 0px)';
           }
           if (mediaRef.current) {
-            mediaRef.current.style.transform = 'scale(1.44)';
+            mediaRef.current.style.transform = `scale(${isFullScreenHero ? c.mediaZoom : 1.44})`;
           }
           if (titleRef.current) {
             titleRef.current.style.opacity = '0';
@@ -317,9 +322,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
           }
 
           // 2. Play initial reveal animation:
-          // "the white edges coming in on the image to the current start state of the hero animation"
-          // and "blur reveal for the text"
-          const animState = { factor: 0, mediaScale: 1.44 };
+          const animState = { factor: 0, mediaScale: isFullScreenHero ? c.mediaZoom : 1.44 };
           const { startIx, startIy } = insetsRef.current;
           const initialMediaZoom = c.mediaZoom;
           const initialRadius = c.startRadius;
@@ -328,12 +331,17 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
             delay: 0.15,
             onUpdate: () => {
               if (isIntroActiveRef.current && frameRef.current && mediaRef.current) {
-                const f = animState.factor;
-                const iy = startIy * f;
-                const ix = startIx * f;
-                const r = initialRadius * f;
-                frameRef.current.style.clipPath = `inset(${iy}px ${ix}px ${iy}px ${ix}px round ${r}px)`;
-                mediaRef.current.style.transform = `scale(${animState.mediaScale})`;
+                if (isFullScreenHero) {
+                  frameRef.current.style.clipPath = 'none';
+                  mediaRef.current.style.transform = `scale(${initialMediaZoom})`;
+                } else {
+                  const f = animState.factor;
+                  const iy = startIy * f;
+                  const ix = startIx * f;
+                  const r = initialRadius * f;
+                  frameRef.current.style.clipPath = `inset(${iy}px ${ix}px ${iy}px ${ix}px round ${r}px)`;
+                  mediaRef.current.style.transform = `scale(${animState.mediaScale})`;
+                }
               }
             },
             onComplete: () => {
@@ -360,17 +368,19 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
             );
           }
 
-          // The white margins slide in around the image to frame it into its initial card state
-          tlEntrance.to(
-            animState,
-            {
-              factor: 1,
-              mediaScale: initialMediaZoom,
-              duration: 1.45,
-              ease: 'power3.inOut',
-            },
-            0.45
-          );
+          // When not full screen, the margins slide in. When full screen, image stays full screen.
+          if (!isFullScreenHero) {
+            tlEntrance.to(
+              animState,
+              {
+                factor: 1,
+                mediaScale: initialMediaZoom,
+                duration: 1.45,
+                ease: 'power3.inOut',
+              },
+              0.45
+            );
+          }
 
           // Scroll hint gently slides up into place
           if (hintRef.current) {
@@ -460,12 +470,12 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
             // 1. First half of expansion: dark (#2C2C2C, matching page text)
             // 2. Second half of expansion through fullscreen hold: white (#FFFFFF)
             // 3. As underneath section slides over top navigation (curtainP >= 0.78): returns to dark (#2C2C2C)
-            let navTheme: 'dark' | 'white' = 'dark';
+            let navTheme: 'dark' | 'white' = isFullScreenHero ? 'white' : 'dark';
             if (p <= 0) {
-              navTheme = 'dark';
+              navTheme = isFullScreenHero ? 'white' : 'dark';
             } else if (p < expandRatio) {
               const expandP = p / expandRatio;
-              navTheme = expandP >= 0.5 ? 'white' : 'dark';
+              navTheme = isFullScreenHero || expandP >= 0.5 ? 'white' : 'dark';
             } else if (p <= holdRatio) {
               navTheme = 'white';
             } else {
@@ -488,7 +498,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
             updateNavTheme('dark');
           },
           onLeaveBack: () => {
-            updateNavTheme('dark');
+            updateNavTheme(isFullScreenHero ? 'white' : 'dark');
             if (parallaxRef.current) {
               parallaxRef.current.style.transform = 'translate3d(0, 0, 0)';
               parallaxRef.current.style.filter = 'brightness(1)';

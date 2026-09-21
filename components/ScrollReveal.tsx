@@ -19,6 +19,14 @@ export interface ScrollRevealProps {
   textClassName?: string;
   rotationEnd?: string;
   wordAnimationEnd?: string;
+  autoPlay?: boolean;
+  scrub?: boolean;
+  triggerRef?: RefObject<HTMLElement | null>;
+  triggerStart?: string;
+  triggerEnd?: string;
+  toggleActions?: string;
+  stagger?: number;
+  duration?: number;
 }
 
 // Recursively processes children so every word has the .word class for GSAP targeting
@@ -88,7 +96,15 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   containerClassName = '',
   textClassName = '',
   rotationEnd = 'bottom bottom',
-  wordAnimationEnd = 'bottom bottom'
+  wordAnimationEnd = 'bottom bottom',
+  autoPlay = true,
+  scrub = false,
+  triggerRef,
+  triggerStart = 'top 75%',
+  triggerEnd = 'bottom top',
+  toggleActions = 'play reverse play reverse',
+  stagger = 0.032,
+  duration = 0.65,
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
 
@@ -100,68 +116,138 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
     const el = containerRef.current;
     if (!el) return;
 
+    const reduceMotion =
+      typeof window !== 'undefined' && window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+
+    const wordElements = el.querySelectorAll<HTMLElement>('.word');
+
+    if (reduceMotion) {
+      gsap.set(el, { rotate: 0 });
+      gsap.set(wordElements, { opacity: 1, filter: 'none' });
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
+      const targetTrigger = (triggerRef && triggerRef.current) || el;
 
-      gsap.fromTo(
-        el,
-        { transformOrigin: '0% 50%', rotate: baseRotation },
-        {
-          ease: 'none',
-          rotate: 0,
+      if (autoPlay && !scrub) {
+        // Auto-play mode: once triggered into view, plays to completion and reverses/resets on scroll up
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: el,
+            trigger: targetTrigger,
             scroller,
-            start: 'top bottom',
-            end: rotationEnd,
-            scrub: true
-          }
-        }
-      );
+            start: triggerStart,
+            end: triggerEnd,
+            toggleActions: toggleActions,
+          },
+        });
 
-      const wordElements = el.querySelectorAll<HTMLElement>('.word');
+        tl.fromTo(
+          el,
+          { transformOrigin: '0% 50%', rotate: baseRotation },
+          {
+            ease: 'power2.out',
+            rotate: 0,
+            duration: duration * 1.6,
+          },
+          0
+        );
 
-      gsap.fromTo(
-        wordElements,
-        { opacity: baseOpacity, willChange: 'opacity' },
-        {
-          ease: 'none',
-          opacity: 1,
-          stagger: 0.05,
-          scrollTrigger: {
-            trigger: el,
-            scroller,
-            start: 'top bottom-=20%',
-            end: wordAnimationEnd,
-            scrub: true
-          }
-        }
-      );
-
-      if (enableBlur) {
-        gsap.fromTo(
+        tl.fromTo(
           wordElements,
-          { filter: `blur(${blurStrength}px)` },
+          {
+            opacity: baseOpacity,
+            filter: enableBlur ? `blur(${blurStrength}px)` : 'none',
+            willChange: 'opacity, filter',
+          },
+          {
+            ease: 'power2.out',
+            opacity: 1,
+            filter: 'blur(0px)',
+            stagger: stagger,
+            duration: duration,
+          },
+          0.04
+        );
+      } else {
+        // Scroll-scrubbed mode: animation progress is tied to scroll position
+        gsap.fromTo(
+          el,
+          { transformOrigin: '0% 50%', rotate: baseRotation },
           {
             ease: 'none',
-            filter: 'blur(0px)',
-            stagger: 0.05,
+            rotate: 0,
+            scrollTrigger: {
+              trigger: el,
+              scroller,
+              start: 'top bottom',
+              end: rotationEnd,
+              scrub: true,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          wordElements,
+          { opacity: baseOpacity, willChange: 'opacity' },
+          {
+            ease: 'none',
+            opacity: 1,
+            stagger: stagger || 0.05,
             scrollTrigger: {
               trigger: el,
               scroller,
               start: 'top bottom-=20%',
               end: wordAnimationEnd,
-              scrub: true
-            }
+              scrub: true,
+            },
           }
         );
+
+        if (enableBlur) {
+          gsap.fromTo(
+            wordElements,
+            { filter: `blur(${blurStrength}px)` },
+            {
+              ease: 'none',
+              filter: 'blur(0px)',
+              stagger: stagger || 0.05,
+              scrollTrigger: {
+                trigger: el,
+                scroller,
+                start: 'top bottom-=20%',
+                end: wordAnimationEnd,
+                scrub: true,
+              },
+            }
+          );
+        }
       }
     }, el);
 
     return () => {
       ctx.revert();
     };
-  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
+  }, [
+    scrollContainerRef,
+    triggerRef,
+    enableBlur,
+    baseRotation,
+    baseOpacity,
+    rotationEnd,
+    wordAnimationEnd,
+    blurStrength,
+    autoPlay,
+    scrub,
+    triggerStart,
+    triggerEnd,
+    toggleActions,
+    stagger,
+    duration,
+  ]);
 
   return (
     <h2 ref={containerRef} className={`my-5 ${containerClassName}`}>
