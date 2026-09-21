@@ -60,8 +60,8 @@ export default function SiteNavigation() {
       menuButtonColor={isWhite ? "#FFFFFF" : "#2C2C2C"}
       openMenuButtonColor="#2C2C2C"
       changeMenuColorOnOpen={true}
-      colors={["#D4C5A9", "#8B9E6B", "#2A3723"]}
-      accentColor="#6B7D50"
+      colors={["#D4C5A9", "#8DA388", "#2A3723"]}
+      accentColor="#8DA388"
     />
   );
 }

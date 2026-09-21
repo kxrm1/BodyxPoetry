@@ -468,7 +468,7 @@ export default function GatheringSection() {
                       y={y + (idx === 0 || idx === 4 ? 35 : 37)}
                       textAnchor="middle"
                       className={`text-[9px] sm:text-[10px] font-serif tracking-widest pointer-events-none ${
-                        isSelected ? "fill-[#6B7D50] font-medium" : "fill-[#B8A08A]"
+                        isSelected ? "fill-[#8DA388] font-medium" : "fill-[#B8A08A]"
                       }`}
                     >
                       {moment.time}

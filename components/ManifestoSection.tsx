@@ -9,39 +9,8 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-interface ManifestoLine {
-  text: string;
-  emphasisWords?: string[];
-  italicWords?: string[];
-}
-
-const MANIFESTO_LINES: ManifestoLine[] = [
-  {
-    text: "Where the physical body meets conscious breath.",
-    emphasisWords: ["conscious", "breath."],
-    italicWords: ["breath."],
-  },
-  {
-    text: "Where intentional movement becomes living meditation.",
-    emphasisWords: ["living", "meditation."],
-    italicWords: ["meditation."],
-  },
-  {
-    text: "A sacred pause carved within the relentless noise.",
-    emphasisWords: ["sacred", "pause"],
-    italicWords: [],
-  },
-  {
-    text: "Slow down to listen. Soften to receive.",
-    emphasisWords: ["listen.", "receive."],
-    italicWords: ["Soften"],
-  },
-  {
-    text: "Reconnect. Realign. Return to your true center.",
-    emphasisWords: ["center."],
-    italicWords: ["true"],
-  },
-];
+const MANIFESTO_TEXT =
+  "Where the physical body meets conscious breath. Where intentional movement becomes living meditation. A sacred pause carved within the relentless noise. Slow down to listen. Soften to receive. Reconnect. Realign. Return to your true center.";
 
 export default function ManifestoSection() {
   const [mounted, setMounted] = useState(false);
@@ -144,7 +113,7 @@ export default function ManifestoSection() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-14 xl:gap-20">
         {/* Left Column: Text Reveal (resets on scroll up and reveals on enter) */}
-        <div className="w-full lg:max-w-[58%] xl:max-w-[60%] flex-1">
+        <div className="w-full lg:max-w-[58%] xl:max-w-[62%] flex-1">
           <ScrollReveal
             autoPlay={true}
             scrub={false}
@@ -152,55 +121,15 @@ export default function ManifestoSection() {
             triggerStart="top 75%"
             triggerEnd="bottom top"
             toggleActions="play reverse play reverse"
-            baseRotation={2}
+            baseRotation={1.5}
             baseOpacity={0.12}
             blurStrength={5}
-            stagger={0.032}
+            stagger={0.026}
             duration={0.65}
             containerClassName="w-full my-0"
-            textClassName="w-full text-[clamp(1.65rem,2.8vw,2.75rem)] leading-[1.38] lg:leading-[1.42]"
+            textClassName="w-full text-[clamp(1.22rem,2.1vw,1.9rem)] leading-[1.64] sm:leading-[1.72] text-earth font-serif font-display font-normal tracking-tight text-center lg:text-left"
           >
-            <div className="space-y-4 sm:space-y-6 md:space-y-7 text-center lg:text-left">
-              {MANIFESTO_LINES.map((line, lineIdx) => (
-                <div key={lineIdx} className="overflow-visible">
-                  {line.text.split(" ").map((word, wordIdx) => {
-                    const cleanWord = word.replace(/[.,]/g, "");
-                    const isItalic = line.italicWords?.some(
-                      (iw) =>
-                        cleanWord.toLowerCase() ===
-                        iw.replace(/[.,]/g, "").toLowerCase()
-                    );
-                    const isEmphasized = line.emphasisWords?.some(
-                      (ew) =>
-                        cleanWord.toLowerCase() ===
-                        ew.replace(/[.,]/g, "").toLowerCase()
-                    );
-
-                    if (isItalic) {
-                      return (
-                        <span
-                          key={`${lineIdx}-${wordIdx}`}
-                          className="font-serif font-normal text-matcha-dark text-[1.14em] mr-[0.26em]"
-                        >
-                          {word}
-                        </span>
-                      );
-                    }
-
-                    return (
-                      <span
-                        key={`${lineIdx}-${wordIdx}`}
-                        className={`font-serif font-display text-[1.28em] sm:text-[1.34em] text-earth tracking-tight font-normal mr-[0.24em] ${
-                          isEmphasized ? "font-medium" : ""
-                        }`}
-                      >
-                        {word}
-                      </span>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
+            {MANIFESTO_TEXT}
           </ScrollReveal>
         </div>
 

@@ -34,7 +34,7 @@ export default function TicketSection() {
   return (
     <section
       id="ticket"
-      className="relative z-20 w-full bg-[#8B9E6B] text-[#1C2716] pt-20 sm:pt-28 md:pt-32 pb-20 sm:pb-28 px-6 sm:px-10 lg:px-16 overflow-hidden select-none scroll-mt-12"
+      className="relative z-20 w-full bg-[#8DA388] text-[#1C2716] pt-20 sm:pt-28 md:pt-32 pb-20 sm:pb-28 px-6 sm:px-10 lg:px-16 overflow-hidden select-none scroll-mt-12"
     >
       <div className="max-w-4xl mx-auto relative z-20">
         {/* Simple Ticket Sale Section */}

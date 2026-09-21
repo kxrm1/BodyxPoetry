@@ -81,6 +81,29 @@ export default function ActivitiesSection() {
   const startXRef = useRef(0);
   const scrollLeftRef = useRef(0);
 
+  const updateHorizontalParallax = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const containerRect = container.getBoundingClientRect();
+    if (!containerRect.width) return;
+    const containerCenter = containerRect.left + containerRect.width / 2;
+
+    const cards = container.querySelectorAll<HTMLElement>("[data-chamber-card]");
+    cards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const diff = (cardCenter - containerCenter) / (containerRect.width / 2);
+      const clampedDiff = Math.max(-1.5, Math.min(1.5, diff));
+      // Parallax horizontal counter-drift: shifts image counter to horizontal scroll angle
+      const shiftX = clampedDiff * -36;
+
+      const hTarget = card.querySelector<HTMLElement>("[data-parallax-h]");
+      if (hTarget) {
+        gsap.set(hTarget, { x: shiftX });
+      }
+    });
+  }, []);
+
   const checkScrollState = useCallback(() => {
     const el = scrollContainerRef.current;
     if (!el) return;
@@ -94,6 +117,11 @@ export default function ActivitiesSection() {
     const idx = Math.round(scrollLeft / (cardWidth + gap));
     setActiveIndex(Math.min(Math.max(idx, 0), CHAMBERS.length - 1));
   }, []);
+
+  const handleScroll = useCallback(() => {
+    checkScrollState();
+    updateHorizontalParallax();
+  }, [checkScrollState, updateHorizontalParallax]);
 
   const scroll = (direction: "left" | "right") => {
     const el = scrollContainerRef.current;
@@ -124,6 +152,7 @@ export default function ActivitiesSection() {
     const x = e.pageX - el.offsetLeft;
     const walk = (x - startXRef.current) * 1.5;
     el.scrollLeft = scrollLeftRef.current - walk;
+    handleScroll();
   };
 
   const onMouseUp = () => {
@@ -135,9 +164,21 @@ export default function ActivitiesSection() {
     if (!el) return;
 
     checkScrollState();
-    window.addEventListener("resize", checkScrollState);
-    return () => window.removeEventListener("resize", checkScrollState);
-  }, [checkScrollState]);
+    updateHorizontalParallax();
+
+    const onResize = () => {
+      checkScrollState();
+      updateHorizontalParallax();
+    };
+
+    window.addEventListener("resize", onResize);
+    window.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [checkScrollState, updateHorizontalParallax]);
 
   useEffect(() => {
     const prefersReduced =
@@ -238,6 +279,27 @@ export default function ActivitiesSection() {
           }
         );
       }
+
+      // 4. Optical vertical parallax on chamber card photos
+      const vertElements = section.querySelectorAll("[data-parallax-v]");
+      if (vertElements.length) {
+        gsap.fromTo(
+          vertElements,
+          {
+            yPercent: -12,
+          },
+          {
+            yPercent: 12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.6,
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -325,7 +387,7 @@ export default function ActivitiesSection() {
       >
         <div
           ref={scrollContainerRef}
-          onScroll={checkScrollState}
+          onScroll={handleScroll}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
@@ -338,13 +400,27 @@ export default function ActivitiesSection() {
               data-chamber-card
               className="relative shrink-0 w-[84vw] sm:w-[380px] md:w-[420px] lg:w-[460px] h-[480px] sm:h-[520px] rounded-[24px] overflow-hidden shadow-[0_14px_44px_rgba(44,38,32,0.12)] border border-black/[0.05] group snap-start bg-[#1F1A16]"
             >
-              {/* Cover Image */}
-              <img
-                src={chamber.image}
-                alt={chamber.alt}
-                draggable={false}
-                className="w-full h-full object-cover select-none transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
-              />
+              {/* Inner Parallax Viewport */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Vertical Parallax Layer (GSAP ScrollTrigger scrubs yPercent) */}
+                <div
+                  data-parallax-v
+                  className="absolute -top-[16%] -left-[16%] w-[132%] h-[132%] [will-change:transform]"
+                >
+                  {/* Horizontal Parallax Layer (drifts with horizontal carousel scroll) */}
+                  <div
+                    data-parallax-h
+                    className="w-full h-full [will-change:transform]"
+                  >
+                    <img
+                      src={chamber.image}
+                      alt={chamber.alt}
+                      draggable={false}
+                      className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+              </div>
 
               {/* Dark bottom gradient overlay matching the previous design */}
               <div

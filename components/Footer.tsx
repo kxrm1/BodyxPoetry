@@ -11,7 +11,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full bg-[#8B9E6B] text-[#1C2716]/80 py-16 px-6 sm:px-10 lg:px-16 border-t border-[#1C2716]/15 font-serif select-none">
+    <footer className="relative w-full bg-[#8DA388] text-[#1C2716]/80 py-16 px-6 sm:px-10 lg:px-16 border-t border-[#1C2716]/15 font-serif select-none">
       {/* Organic Grain Texture Overlay */}
       <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-10 mix-blend-multiply bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+')]" />
 
