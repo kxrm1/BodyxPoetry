@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import AccordionGallery, { AccordionGalleryItem } from "@/components/AccordionGallery";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const CHAMBERS: AccordionGalleryItem[] = [
+export interface ChamberItem {
+  image: string;
+  label: React.ReactNode;
+  alt: string;
+}
+
+const CHAMBERS: ChamberItem[] = [
   {
     image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
     label: (
@@ -57,8 +63,6 @@ const CHAMBERS: AccordionGalleryItem[] = [
   },
 ];
 
-export { AccordionGallery };
-
 export default function ActivitiesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const orb1Ref = useRef<HTMLDivElement>(null);
@@ -67,6 +71,73 @@ export default function ActivitiesSection() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+
+  const checkScrollState = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+
+    const card = el.querySelector("[data-chamber-card]") as HTMLElement | null;
+    const cardWidth = card ? card.offsetWidth : 420;
+    const gap = 20;
+    const idx = Math.round(scrollLeft / (cardWidth + gap));
+    setActiveIndex(Math.min(Math.max(idx, 0), CHAMBERS.length - 1));
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const card = el.querySelector("[data-chamber-card]") as HTMLElement | null;
+    const cardWidth = card ? card.offsetWidth : 420;
+    const gap = 20;
+    const scrollAmount = cardWidth + gap;
+    el.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - el.offsetLeft;
+    scrollLeftRef.current = el.scrollLeft;
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return;
+    e.preventDefault();
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    el.scrollLeft = scrollLeftRef.current - walk;
+  };
+
+  const onMouseUp = () => {
+    isDraggingRef.current = false;
+  };
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    checkScrollState();
+    window.addEventListener("resize", checkScrollState);
+    return () => window.removeEventListener("resize", checkScrollState);
+  }, [checkScrollState]);
 
   useEffect(() => {
     const prefersReduced =
@@ -191,7 +262,7 @@ export default function ActivitiesSection() {
       {/* Header Bar */}
       <div
         ref={headerRef}
-        className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-10 md:mb-14 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6"
+        className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-8 md:mb-12 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6"
       >
         <div>
           <h2
@@ -204,34 +275,97 @@ export default function ActivitiesSection() {
           </h2>
         </div>
 
-        <p
-          ref={descRef}
-          className="max-w-md font-serif text-sm sm:text-base text-stone font-light leading-relaxed [will-change:transform,filter,opacity]"
-        >
-          Five immersive chambers curated for somatic alignment, acoustic restoration, and mindful nourishment. Hover or click to explore each passage.
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between md:justify-end gap-6">
+          <p
+            ref={descRef}
+            className="max-w-md font-serif text-sm sm:text-base text-stone font-light leading-relaxed [will-change:transform,filter,opacity]"
+          >
+            Five immersive chambers curated for somatic alignment, acoustic restoration, and mindful nourishment. Scroll or drag horizontally to explore each passage.
+          </p>
+
+          {/* Horizontal navigation arrow buttons & progress */}
+          <div className="flex items-center gap-3 shrink-0 self-start sm:self-end">
+            <span className="text-xs font-serif text-stone/70 tracking-widest uppercase mr-1">
+              0{activeIndex + 1} / 0{CHAMBERS.length}
+            </span>
+            <button
+              type="button"
+              onClick={() => scroll("left")}
+              disabled={!canScrollLeft}
+              aria-label="Previous chamber"
+              className={`w-10 h-10 rounded-full border border-earth/25 flex items-center justify-center transition-all duration-200 ${
+                canScrollLeft
+                  ? "text-earth hover:bg-earth hover:text-cream cursor-pointer active:scale-95 shadow-sm"
+                  : "text-earth/25 border-earth/10 cursor-not-allowed opacity-40"
+              }`}
+            >
+              <ArrowLeft weight="light" className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scroll("right")}
+              disabled={!canScrollRight}
+              aria-label="Next chamber"
+              className={`w-10 h-10 rounded-full border border-earth/25 flex items-center justify-center transition-all duration-200 ${
+                canScrollRight
+                  ? "text-earth hover:bg-earth hover:text-cream cursor-pointer active:scale-95 shadow-sm"
+                  : "text-earth/25 border-earth/10 cursor-not-allowed opacity-40"
+              }`}
+            >
+              <ArrowRight weight="light" className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Accordion Gallery */}
+      {/* Horizontally Scrollable Card Gallery */}
       <div
         ref={galleryRef}
-        className="w-full max-w-7xl mx-auto px-6 md:px-12 relative z-10 [will-change:transform,filter,opacity]"
+        className="w-full relative z-10 [will-change:transform,filter,opacity]"
       >
-        <AccordionGallery
-          items={CHAMBERS}
-          defaultIndex={0}
-          showLabels={true}
-          accentColor="#8B9E6B"
-          overlayColor="#1F1A16"
-          textColor="#FAF7F2"
-          height={520}
-          gap={12}
-          radius={24}
-          expandRatio={0.52}
-          tilt={7}
-          parallax={0.4}
-          enableScrollAnimation={true}
-        />
+        <div
+          ref={scrollContainerRef}
+          onScroll={checkScrollState}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
+          className="w-full overflow-x-auto flex gap-5 md:gap-6 px-6 sm:px-10 md:px-12 xl:px-[calc((100vw-80rem)/2+3rem)] py-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing select-none snap-x snap-mandatory scroll-smooth"
+        >
+          {CHAMBERS.map((chamber, idx) => (
+            <div
+              key={idx}
+              data-chamber-card
+              className="relative shrink-0 w-[84vw] sm:w-[380px] md:w-[420px] lg:w-[460px] h-[480px] sm:h-[520px] rounded-[24px] overflow-hidden shadow-[0_14px_44px_rgba(44,38,32,0.12)] border border-black/[0.05] group snap-start bg-[#1F1A16]"
+            >
+              {/* Cover Image */}
+              <img
+                src={chamber.image}
+                alt={chamber.alt}
+                draggable={false}
+                className="w-full h-full object-cover select-none transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
+              />
+
+              {/* Dark bottom gradient overlay matching the previous design */}
+              <div
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(31,26,22,0.85)_100%)]"
+                aria-hidden="true"
+              />
+
+              {/* Chamber Label */}
+              <div
+                className="pointer-events-none absolute bottom-6 left-6 right-6 z-10 flex items-center"
+                aria-hidden="true"
+              >
+                <span className="text-[clamp(1.1rem,1.5vw,1.4rem)] font-serif font-display tracking-tight text-[#FAF7F2] [text-shadow:0_2px_14px_rgba(0,0,0,0.65)]">
+                  {chamber.label}
+                </span>
+              </div>
+            </div>
+          ))}
+          {/* Right end padding spacer */}
+          <div className="shrink-0 w-6 sm:w-12" aria-hidden="true" />
+        </div>
       </div>
     </section>
   );
