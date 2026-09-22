@@ -21,6 +21,7 @@ export interface StaggeredMenuProps {
   displayItemNumbering?: boolean;
   className?: string;
   logoUrl?: string;
+  logoWhite?: boolean;
   menuButtonColor?: string;
   openMenuButtonColor?: string;
   accentColor?: string;
@@ -42,6 +43,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displayItemNumbering = true,
   className,
   logoUrl = '/Logo black.png',
+  logoWhite = false,
   menuButtonColor = '#2C2C2C',
   openMenuButtonColor = '#2C2C2C',
   changeMenuColorOnOpen = true,
@@ -300,7 +302,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     if (toggleBtnRef.current) {
       if (changeMenuColorOnOpen) {
         const targetColor = openRef.current ? openMenuButtonColor : menuButtonColor;
-        gsap.to(toggleBtnRef.current, { color: targetColor, duration: 0.35, ease: 'power2.out' });
+        gsap.to(toggleBtnRef.current, { color: targetColor, duration: 0.7, ease: 'power2.out' });
       } else {
         gsap.to(toggleBtnRef.current, { color: menuButtonColor, duration: 0.35, ease: 'power2.out' });
       }
@@ -439,29 +441,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             className="sm-logo relative flex items-center select-none pointer-events-auto cursor-pointer"
             aria-label="Body × Poetry Home"
           >
-            {/* Dark logo - same color as text */}
             <img
-              src="/Logo black.png"
+              src={logoUrl}
               alt="Body × Poetry"
-              className="sm-logo-img block h-14 sm:h-16 md:h-20 w-auto object-contain transition-opacity duration-500 hover:scale-105"
-              style={{
-                opacity: open || !isWhite ? 1 : 0,
-              }}
+              className="sm-logo-img block w-auto object-contain transition-[transform,filter] duration-700 ease-out hover:scale-105"
+              style={{ filter: logoWhite && !open ? 'brightness(0) invert(1)' : 'none' }}
               draggable={false}
-              width={80}
-              height={80}
-            />
-            {/* White logo */}
-            <img
-              src="/Logo white.png"
-              alt="Body × Poetry"
-              className="sm-logo-img absolute left-0 top-0 block h-14 sm:h-16 md:h-20 w-auto object-contain transition-opacity duration-500 hover:scale-105 pointer-events-none"
-              style={{
-                opacity: !open && isWhite ? 1 : 0,
-              }}
-              draggable={false}
-              width={80}
-              height={80}
+              width={971}
+              height={188}
             />
           </a>
 
@@ -582,7 +569,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .staggered-menu-header { position: absolute; top: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 2em; background: transparent; pointer-events: none; z-index: 20; }
 .sm-scope .staggered-menu-header > * { pointer-events: auto; }
 .sm-scope .sm-logo { display: flex; align-items: center; user-select: none; }
-.sm-scope .sm-logo-img { display: block; height: clamp(52px, 6vw, 76px); width: auto; object-fit: contain; }
+.sm-scope .sm-logo-img { display: block; height: clamp(22px, 2.6vw, 34px); width: auto; object-fit: contain; }
 .sm-scope .sm-toggle { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; background: transparent; border: none; cursor: pointer; color: #e9e9ef; font-weight: 500; font-family: var(--font-serif), Georgia, serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; overflow: visible; padding: 6px 12px; border-radius: 9999px; }
 .sm-scope .sm-toggle:focus-visible { outline: 2px solid #ffffffaa; outline-offset: 4px; border-radius: 4px; }
 .sm-scope .sm-line:last-of-type { margin-top: 6px; }

@@ -72,6 +72,10 @@ export default function CtaRevealSection() {
       const ch = content.offsetHeight || vh;
       const isOverflown = ch > vh;
       const diff = Math.max(0, ch - vh);
+      // GatheringSection's rounded bottom corners (up to 4.5rem) curve in before its
+      // bottom edge reaches the viewport. Pin the ticket content this much earlier so
+      // the corners reveal it instead of the dark wrapper behind them.
+      const cornerLead = 120;
 
       const syncState = (self: ScrollTrigger) => {
         if (self.isActive) {
@@ -117,7 +121,7 @@ export default function CtaRevealSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: "top bottom",
+          start: `top bottom+=${cornerLead}`,
           end: "bottom bottom",
           scrub: true,
           onEnter: (self) => syncState(self),
@@ -128,6 +132,9 @@ export default function CtaRevealSection() {
           onRefresh: (self) => syncState(self),
         },
       });
+
+      // Hold still through the corner lead-in so the later phases keep their timing.
+      tl.to(content, { y: 0, ease: "none", duration: cornerLead });
 
       if (isOverflown && !prefersReduced) {
         // Phase 1: Keep content stationary at y: 0 while GatheringSection lifts off the screen.
@@ -152,7 +159,8 @@ export default function CtaRevealSection() {
             y: 0,
             opacity: 1,
             ease: "none",
-            duration: 1,
+            // Pixel-based like the lead-in, so the lead-in keeps its share of the scroll.
+            duration: vh,
           }
         );
       }

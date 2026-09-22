@@ -20,7 +20,7 @@ export interface ScrollRevealProps {
   rotationEnd?: string;
   wordAnimationEnd?: string;
   autoPlay?: boolean;
-  scrub?: boolean;
+  scrub?: boolean | number;
   triggerRef?: RefObject<HTMLElement | null>;
   triggerStart?: string;
   triggerEnd?: string;
@@ -160,71 +160,68 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
           wordElements,
           {
             opacity: baseOpacity,
-            filter: enableBlur ? `blur(${blurStrength}px)` : 'none',
-            willChange: 'opacity, filter',
+            ...(enableBlur ? { filter: `blur(${blurStrength}px)` } : {}),
+            willChange: enableBlur ? 'opacity, filter' : 'opacity',
           },
           {
             ease: 'power2.out',
             opacity: 1,
-            filter: 'blur(0px)',
+            ...(enableBlur ? { filter: 'blur(0px)' } : {}),
             stagger: stagger,
             duration: duration,
+            clearProps: 'willChange',
           },
           0.04
         );
       } else {
-        // Scroll-scrubbed mode: animation progress is tied to scroll position
-        gsap.fromTo(
-          el,
-          { transformOrigin: '0% 50%', rotate: baseRotation },
-          {
-            ease: 'none',
-            rotate: 0,
-            scrollTrigger: {
-              trigger: el,
-              scroller,
-              start: 'top bottom',
-              end: rotationEnd,
-              scrub: true,
-            },
-          }
-        );
+        // Scroll-scrubbed reading progression: animation progress is tied to scroll position
+        const scrubValue = typeof scrub === 'number' ? scrub : (scrub ? 0.6 : true);
+        const animStart = triggerStart || 'top bottom-=20%';
+        const animEnd = triggerEnd || wordAnimationEnd || 'bottom center';
 
-        gsap.fromTo(
-          wordElements,
-          { opacity: baseOpacity, willChange: 'opacity' },
-          {
-            ease: 'none',
-            opacity: 1,
-            stagger: stagger || 0.05,
-            scrollTrigger: {
-              trigger: el,
-              scroller,
-              start: 'top bottom-=20%',
-              end: wordAnimationEnd,
-              scrub: true,
-            },
-          }
-        );
-
-        if (enableBlur) {
+        if (baseRotation !== 0) {
           gsap.fromTo(
-            wordElements,
-            { filter: `blur(${blurStrength}px)` },
+            el,
+            { transformOrigin: '0% 50%', rotate: baseRotation },
             {
               ease: 'none',
-              filter: 'blur(0px)',
-              stagger: stagger || 0.05,
+              rotate: 0,
               scrollTrigger: {
-                trigger: el,
+                trigger: targetTrigger,
                 scroller,
-                start: 'top bottom-=20%',
-                end: wordAnimationEnd,
-                scrub: true,
+                start: animStart,
+                end: rotationEnd || animEnd,
+                scrub: scrubValue,
               },
             }
           );
         }
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: targetTrigger,
+            scroller,
+            start: animStart,
+            end: animEnd,
+            scrub: scrubValue,
+          },
+        });
+
+        tl.fromTo(
+          wordElements,
+          {
+            opacity: baseOpacity,
+            ...(enableBlur ? { filter: `blur(${blurStrength}px)` } : {}),
+            willChange: 'opacity',
+          },
+          {
+            ease: 'none',
+            opacity: 1,
+            ...(enableBlur ? { filter: 'blur(0px)' } : {}),
+            stagger: stagger || 0.05,
+            clearProps: 'willChange',
+          }
+        );
       }
     }, el);
 

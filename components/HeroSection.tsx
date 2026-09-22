@@ -6,28 +6,16 @@ import { ArrowRight } from "@phosphor-icons/react";
 
 const HERO_MORPH_ITEMS: MorphItem[] = [
   {
-    image: "/Hero.jpeg",
-    caption: "Mindful Movement Sanctuary",
+    image: "/images/WhatsApp Image 2026-09-22 at 02.29.12.jpeg",
+    caption: "Sunlit Estate Movement Sanctuary",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=1600&q=80",
-    caption: "Breath-Led Movement on Cedar",
+    image: "/images/hero1.jpeg",
+    caption: "Organic Nourishment Table",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80",
-    caption: "Vinyasa & Prana Sanctuary",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1600&q=80",
-    caption: "432Hz Sound Sanctuary",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1600&q=80",
-    caption: "Ceremonial Uji Matcha",
+    image: "/images/hero2.jpeg",
+    caption: "Mindful Movement & Somatic Flow",
   },
 ];
 
@@ -42,7 +30,7 @@ export default function HeroSection() {
       <div className="absolute top-[28%] right-[15%] w-[45vw] h-[45vw] rounded-full bg-matcha/15 blur-[150px] pointer-events-none" />
 
       <ScrollExpand
-        src="/Hero.jpeg"
+        src="/images/WhatsApp Image 2026-09-22 at 02.29.12.jpeg"
         alt="Mindful movement sanctuary at Body × Poetry"
         customMedia={
           <MorphSlider
@@ -79,6 +67,7 @@ export default function HeroSection() {
         curtainDistance={1.0}
         smoothing={0.04}
         overlayScrim={0.52}
+        titleScrim={0.3}
         bottomGradient={true}
         scrollHint="Scroll to explore"
         title={
@@ -99,7 +88,9 @@ export default function HeroSection() {
             className="max-w-3xl text-left select-none [will-change:transform,opacity,filter]"
           >
             <p className="font-serif font-display text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] text-cream leading-[1.08] tracking-tight font-normal [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]">
-              Where mindful movement, somatic breath, and organic nourishment converge.
+              for the woman who holds everything together,
+              <br />
+              this is your day to be held.
             </p>
           </div>
 

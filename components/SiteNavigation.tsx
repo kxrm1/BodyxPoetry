@@ -24,6 +24,9 @@ const MENU_ITEMS: StaggeredMenuItem[] = [
   },
 ];
 
+// Exact fill color of body_x_poetry_logo.png
+const LOGO_GOLD = "#887E4F";
+
 const SOCIAL_ITEMS: StaggeredMenuSocialItem[] = [
   { label: "Instagram", link: "https://instagram.com" },
   { label: "Spotify", link: "https://spotify.com" },
@@ -46,7 +49,33 @@ export default function SiteNavigation() {
       window.removeEventListener("nav-theme-change", handleThemeChange);
   }, []);
 
-  const isWhite = navTheme === "white";
+  // The ticket section is revealed underneath the section above it, so check
+  // which element is actually painted behind the logo rather than scroll offsets.
+  const [overTicket, setOverTicket] = useState(false);
+
+  useEffect(() => {
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      const stack = document.elementsFromPoint(40, 45);
+      const behind = stack.find((el) => !el.closest(".sm-scope"));
+      setOverTicket(!!behind?.closest("#ticket"));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
+
+  const logoWhite = navTheme === "white" || overTicket;
 
   return (
     <StaggeredMenu
@@ -56,8 +85,9 @@ export default function SiteNavigation() {
       socialItems={SOCIAL_ITEMS}
       displaySocials={true}
       displayItemNumbering={true}
-      logoUrl={isWhite ? "/Logo white.png" : "/Logo black.png"}
-      menuButtonColor={isWhite ? "#FFFFFF" : "#2C2C2C"}
+      logoUrl="/body_x_poetry_logo.png"
+      logoWhite={logoWhite}
+      menuButtonColor={logoWhite ? "#FFFFFF" : LOGO_GOLD}
       openMenuButtonColor="#2C2C2C"
       changeMenuColorOnOpen={true}
       colors={["#D4C5A9", "#8DA388", "#2A3723"]}

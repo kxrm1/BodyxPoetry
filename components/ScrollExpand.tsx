@@ -28,6 +28,7 @@ type ConfigKey =
   | 'curtainDistance'
   | 'smoothing'
   | 'overlayScrim'
+  | 'titleScrim'
   | 'useWindowScroll'
   | 'enabled'
   | 'matchTitleWidth'
@@ -51,6 +52,7 @@ export interface ScrollExpandProps {
   curtainDistance?: number;
   smoothing?: number;
   overlayScrim?: number;
+  titleScrim?: number;
   useWindowScroll?: boolean;
   enabled?: boolean;
   matchTitleWidth?: boolean;
@@ -83,6 +85,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   curtainDistance = 1.0,
   smoothing = 0.08,
   overlayScrim = 0.48,
+  titleScrim = 0,
   useWindowScroll = false,
   enabled = true,
   matchTitleWidth = false,
@@ -105,6 +108,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   const titleRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const scrimRef = useRef<HTMLDivElement | null>(null);
+  const titleScrimRef = useRef<HTMLDivElement | null>(null);
   const hintRef = useRef<HTMLDivElement | null>(null);
 
   const insetsRef = useRef({
@@ -130,6 +134,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     curtainDistance,
     smoothing,
     overlayScrim,
+    titleScrim,
     useWindowScroll,
     enabled,
     matchTitleWidth,
@@ -199,8 +204,10 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
 
     if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
 
+    const out = smoothstep(0.3, 0.85, p);
+    if (titleScrimRef.current) titleScrimRef.current.style.opacity = `${c.titleScrim * (1 - out)}`;
+
     if (titleRef.current) {
-      const out = smoothstep(0.3, 0.85, p);
       titleRef.current.style.opacity = `${1 - out}`;
       titleRef.current.style.transform = `translate3d(0, ${-36 * out}px, 0) scale(${1 + 0.05 * out})`;
       titleRef.current.style.filter = `blur(${16 * out}px)`;
@@ -665,6 +672,15 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
                 ref={scrimRef}
                 className="absolute inset-0 opacity-0 pointer-events-none bg-[linear-gradient(to_top,rgba(0,0,0,0.78),rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.4))]"
               />
+              {/* Flat dark layer under the title; fades out with the title on scroll */}
+              {titleScrim > 0 ? (
+                <div
+                  ref={titleScrimRef}
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-black pointer-events-none [will-change:opacity]"
+                  style={{ opacity: titleScrim }}
+                />
+              ) : null}
               {children ? (
                 <div
                   ref={overlayRef}
