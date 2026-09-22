@@ -398,7 +398,7 @@ export default function ActivitiesSection() {
             <div
               key={idx}
               data-chamber-card
-              className="relative shrink-0 w-[84vw] sm:w-[380px] md:w-[420px] lg:w-[460px] h-[480px] sm:h-[520px] rounded-[24px] overflow-hidden shadow-[0_14px_44px_rgba(44,38,32,0.12)] border border-black/[0.05] group snap-start bg-[#1F1A16]"
+              className="relative shrink-0 w-[84vw] sm:w-[380px] md:w-[420px] lg:w-[460px] h-[480px] sm:h-[520px] rounded-[24px] overflow-hidden shadow-[0_14px_44px_rgba(44,38,32,0.12)] group snap-start bg-[#1F1A16]"
             >
               {/* Inner Parallax Viewport */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">

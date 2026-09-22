@@ -133,11 +133,11 @@ export default function ManifestoSection() {
           </ScrollReveal>
         </div>
 
-        {/* Right Column: Arch Top Picture with blur reveal animation (matching text height) */}
-        <div className="w-full lg:w-auto self-center lg:self-stretch flex justify-center lg:justify-end shrink-0">
+        {/* Right Column: Arch Top Picture with blur reveal animation */}
+        <div className="w-full lg:w-auto self-center flex justify-center lg:justify-end shrink-0">
           <div
             ref={archWrapperRef}
-            className="relative shrink-0 w-[260px] sm:w-[300px] md:w-[330px] lg:w-[360px] xl:w-[410px] h-[380px] sm:h-[440px] md:h-[480px] lg:h-full select-none overflow-hidden rounded-t-full rounded-b-2xl shadow-[0_20px_50px_rgba(44,38,32,0.14)]"
+            className="relative shrink-0 w-[260px] sm:w-[300px] md:w-[330px] lg:w-[360px] xl:w-[410px] h-[380px] sm:h-[460px] md:h-[520px] lg:h-[580px] xl:h-[640px] select-none overflow-hidden rounded-t-full rounded-b-2xl shadow-[0_20px_50px_rgba(44,38,32,0.14)]"
             style={{ willChange: "opacity, filter, transform" }}
           >
             <div ref={archImageRef} className="w-full h-full">
