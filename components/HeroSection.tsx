@@ -6,16 +6,16 @@ import { ArrowRight } from "@phosphor-icons/react";
 
 const HERO_MORPH_ITEMS: MorphItem[] = [
   {
-    image: "/images/WhatsApp Image 2026-09-22 at 02.29.12.jpeg",
-    caption: "Sunlit Estate Movement Sanctuary",
-  },
-  {
-    image: "/images/hero1.jpeg",
-    caption: "Organic Nourishment Table",
-  },
-  {
-    image: "/images/hero2.jpeg",
+    image: "/images/hero/hero-1.jpeg",
     caption: "Mindful Movement & Somatic Flow",
+  },
+  {
+    image: "/images/hero/hero-2.jpeg",
+    caption: "Local Artisans & Adornment",
+  },
+  {
+    image: "/images/hero/hero-3.jpeg",
+    caption: "Crystal Sound Bath",
   },
 ];
 
@@ -30,7 +30,7 @@ export default function HeroSection() {
       <div className="absolute top-[28%] right-[15%] w-[45vw] h-[45vw] rounded-full bg-matcha/15 blur-[150px] pointer-events-none" />
 
       <ScrollExpand
-        src="/images/WhatsApp Image 2026-09-22 at 02.29.12.jpeg"
+        src="/images/hero/hero-1.jpeg"
         alt="Mindful movement sanctuary at Body × Poetry"
         customMedia={
           <MorphSlider

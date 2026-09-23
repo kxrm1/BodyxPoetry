@@ -18,7 +18,7 @@ export interface ChamberItem {
 
 const CHAMBERS: ChamberItem[] = [
   {
-    image: "/images/sensory/1.jpeg",
+    image: "/images/activities/1.jpeg",
     label: (
       <span>
         01 · <span className="font-serif text-matcha text-[1.22em] mx-1">Yoga</span>
@@ -28,7 +28,7 @@ const CHAMBERS: ChamberItem[] = [
     focalPoint: "50% 50%",
   },
   {
-    image: "/images/sensory/2.jpeg",
+    image: "/images/activities/2.jpeg",
     label: (
       <span>
         02 · <span className="font-serif text-matcha text-[1.22em] mx-1">Massage</span>
@@ -38,7 +38,7 @@ const CHAMBERS: ChamberItem[] = [
     focalPoint: "50% 50%",
   },
   {
-    image: "/images/sensory/3.jpeg",
+    image: "/images/activities/3.jpeg",
     label: (
       <span>
         03 · <span className="font-serif text-matcha text-[1.22em] mx-1">Acupuncture</span>
@@ -48,7 +48,7 @@ const CHAMBERS: ChamberItem[] = [
     focalPoint: "50% 50%",
   },
   {
-    image: "/images/sensory/4.webp",
+    image: "/images/activities/4.jpeg",
     label: (
       <span>
         04 · <span className="font-serif text-matcha text-[1.22em] mx-1">Sound Bath</span>
@@ -58,7 +58,7 @@ const CHAMBERS: ChamberItem[] = [
     focalPoint: "50% 50%",
   },
   {
-    image: "/images/sensory/5.jpeg",
+    image: "/images/activities/7.jpeg",
     label: (
       <span>
         05 · <span className="font-serif text-matcha text-[1.22em] mx-1">Delicious Food</span>
@@ -68,7 +68,7 @@ const CHAMBERS: ChamberItem[] = [
     focalPoint: "50% 50%",
   },
   {
-    image: "/images/sensory/6.webp",
+    image: "/images/activities/6.jpeg",
     label: (
       <span>
         06 · <span className="font-serif text-matcha text-[1.22em] mx-1">Local &amp; International Vendors</span>
@@ -78,7 +78,7 @@ const CHAMBERS: ChamberItem[] = [
     focalPoint: "50% 50%",
   },
   {
-    image: "/images/sensory/7.webp",
+    image: "/images/activities/5.jpeg",
     label: (
       <span>
         07 · <span className="font-serif text-matcha text-[1.22em] mx-1">Beautiful Spaces</span>
