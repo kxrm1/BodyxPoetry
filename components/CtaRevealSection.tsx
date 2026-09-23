@@ -72,7 +72,7 @@ export default function CtaRevealSection() {
       const ch = content.offsetHeight || vh;
       const isOverflown = ch > vh;
       const diff = Math.max(0, ch - vh);
-      // GatheringSection's rounded bottom corners (up to 4.5rem) curve in before its
+      // The preceding section's rounded bottom corners (up to 4.5rem) curve in before its
       // bottom edge reaches the viewport. Pin the ticket content this much earlier so
       // the corners reveal it instead of the dark wrapper behind them.
       const cornerLead = 120;
@@ -137,15 +137,15 @@ export default function CtaRevealSection() {
       tl.to(content, { y: 0, ease: "none", duration: cornerLead });
 
       if (isOverflown && !prefersReduced) {
-        // Phase 1: Keep content stationary at y: 0 while GatheringSection lifts off the screen.
-        // This guarantees the top ("Get Your Ticket Today") is NEVER covered by GatheringSection!
+        // Phase 1: Keep content stationary at y: 0 while the preceding section lifts off the screen.
+        // This guarantees the top ("Get Your Ticket Today") is NEVER covered by the preceding section!
         tl.to(content, {
           y: 0,
           ease: "none",
           duration: vh,
         });
 
-        // Phase 2: Once GatheringSection has cleared the screen, smoothly scroll the remaining content.
+        // Phase 2: Once the preceding section has cleared the screen, smoothly scroll the remaining content.
         tl.to(content, {
           y: -diff,
           ease: "none",

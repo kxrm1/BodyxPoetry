@@ -22,7 +22,7 @@ export default function Footer() {
             Body <span className="font-serif text-[0.8em] text-[#D4C5A9]">×</span> Poetry
           </span>
           <span className="text-xs text-[#D4C5A9]/80 tracking-wider">
-            Ojai Valley, California
+            Newport Beach, California
           </span>
         </div>
 

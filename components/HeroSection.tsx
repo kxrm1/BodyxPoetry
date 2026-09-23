@@ -103,10 +103,10 @@ export default function HeroSection() {
               <div className="flex items-center lg:justify-end gap-2.5 font-serif font-display text-lg sm:text-xl md:text-2xl text-sand tracking-tight">
                 <span>November 7</span>
                 <span className="text-sand/50 text-xs font-serif">·</span>
-                <span>Ojai, California</span>
+                <span>Newport Beach, California</span>
               </div>
               <p className="font-serif text-xs sm:text-sm text-cream/75 tracking-wide">
-                12:00 PM – 4:00 PM · 24 Mats
+                11:00 AM – 3:00 PM · 40 Mats
               </p>
             </div>
 

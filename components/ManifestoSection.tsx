@@ -64,7 +64,7 @@ const renderPartnerLogo = (item: LogoItem) => {
 };
 
 const MANIFESTO_TEXT =
-  "on saturday, november 7, step away from everyday noise and into a private newport beach sanctuary made for your restoration. this intimate five-hour women's retreat invites you to slow down and reconnect with your body. your day includes gentle yoga, guided meditation, a sound bath, restorative treatments, acupuncture and a chef-prepared meal. between each experience, you'll have space to breathe, connect with our wellness partners, and enjoy having nowhere else to be. this is more than a wellness event. it is a full pause from the outside world, and a day to remember the woman beneath every role you carry.";
+  "on saturday, november 7, step away from everyday noise and into a private newport beach sanctuary made for your restoration. this intimate four-hour women's retreat invites you to slow down and reconnect with your body. your day includes gentle yoga, guided meditation, a sound bath, restorative treatments, acupuncture and a chef-prepared meal. between each experience, you'll have space to breathe, connect with our wellness partners, and enjoy having nowhere else to be. this is more than a wellness event. it is a full pause from the outside world, and a day to remember the woman beneath every role you carry.";
 
 export default function ManifestoSection() {
   const [mounted, setMounted] = useState(false);
@@ -166,6 +166,11 @@ export default function ManifestoSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-14 lg:px-16 xl:px-20 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-14 xl:gap-20">
         {/* Left Column: Text Reveal (resets on scroll up and reveals on enter) */}
         <div className="w-full lg:max-w-[58%] xl:max-w-[62%] flex-1">
+          <h2 className="text-[clamp(1.75rem,3.8vw,3.2rem)] leading-[1.15] text-earth mb-6 sm:mb-8 text-center lg:text-left">
+            <span className="font-serif font-display text-[1.28em] sm:text-[1.34em] tracking-tight font-normal block">
+              About our upcoming event
+            </span>
+          </h2>
           <ScrollReveal
             autoPlay={false}
             scrub={0.6}

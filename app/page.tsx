@@ -2,7 +2,7 @@ import SiteNavigation from "@/components/SiteNavigation";
 import HeroSection from "@/components/HeroSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import ActivitiesSection from "@/components/ActivitiesSection";
-import GatheringSection from "@/components/GatheringSection";
+import FaqSection from "@/components/FaqSection";
 import CtaRevealSection from "@/components/CtaRevealSection";
 
 export default function Home() {
@@ -12,9 +12,7 @@ export default function Home() {
       <HeroSection />
       <ManifestoSection />
       <ActivitiesSection />
-      <div className="relative w-full bg-[#24331C]">
-        <GatheringSection />
-      </div>
+      <FaqSection />
       <CtaRevealSection />
     </main>
   );

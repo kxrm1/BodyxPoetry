@@ -13,9 +13,9 @@ const MENU_ITEMS: StaggeredMenuItem[] = [
     link: "#experience",
   },
   {
-    label: "The Gathering",
-    ariaLabel: "The Gathering Schedule & Journey",
-    link: "#details",
+    label: "FAQ",
+    ariaLabel: "Frequently Asked Questions",
+    link: "#faq",
   },
   {
     label: "Tickets",
