@@ -191,9 +191,9 @@ export default function ManifestoSection() {
           >
             <div ref={archImageRef} className="w-full h-full">
               <img
-                src="/images/photo-05.webp"
+                src="/images/arch.jpeg"
                 alt="Body × Poetry sanctuary"
-                className="w-full h-full object-cover object-center transform transition-transform duration-700 ease-out hover:scale-105"
+                className="w-full h-full object-cover object-[58%_50%] transform transition-transform duration-700 ease-out hover:scale-105"
                 loading="lazy"
               />
             </div>

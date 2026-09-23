@@ -66,8 +66,8 @@ export default function HeroSection() {
         holdDistance={0.45}
         curtainDistance={1.0}
         smoothing={0.04}
-        overlayScrim={0.52}
-        titleScrim={0.3}
+        overlayScrim={0.0}
+        titleScrim={0.0}
         bottomGradient={true}
         scrollHint="Scroll to explore"
         title={
