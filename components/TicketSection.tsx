@@ -17,7 +17,7 @@ export default function TicketSection() {
           src="/images/ticket.jpeg"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-[50%_55%] pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_42%] pointer-events-none"
         />
         {/* Top scrim for heading legibility, bottom fade into the footer green */}
         <div
@@ -38,14 +38,25 @@ export default function TicketSection() {
             Get Your Ticket Today
           </motion.h2>
 
+          <motion.p
+            initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-xl mx-auto mb-8 font-serif font-light text-sm sm:text-base leading-relaxed text-[#FAF7F2]/90 drop-shadow-[0_1px_8px_rgba(28,39,22,0.5)]"
+          >
+            Just a gentle note before you book: tickets are non-refundable.
+          </motion.p>
+
           <motion.div
             initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
-              href="https://buy.stripe.com"
+              href="https://square.link/u/tr4WlrxY?src=sheet"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#FAF7F2] text-[#1C2716] hover:bg-[#D4C5A9] hover:text-[#1C2716] transition-all duration-300 font-serif font-medium uppercase tracking-[0.18em] text-sm cursor-pointer shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"

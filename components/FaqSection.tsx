@@ -7,7 +7,7 @@ const FAQS = [
   {
     question: "What should I wear or bring with me?",
     answer:
-      "Wear soft, breathable layers suitable for movement and deep relaxation. All yoga mats, organic wool bolsters, weighted silk eye masks, and hydration are prepared for you. You only need to bring yourself.",
+      "Wear soft, breathable layers suitable for movement and deep relaxation. All yoga mats and accommodations are provided.",
   },
   {
     question: "Can beginners or first-time movers participate?",
@@ -15,14 +15,19 @@ const FAQS = [
       "Absolutely. Our movement is somatic and intuitive rather than performative. The flow is guided with multiple gentle modifications designed to honor your body's energy and pace.",
   },
   {
-    question: "How are dietary accommodations handled at the Harvest Table?",
+    question: "Is there a predefined schedule for the practices?",
     answer:
-      "Our three-course lunch is entirely plant-forward, made with locally grown produce, and naturally dairy-free. We gladly accommodate gluten-free, nut-free, and specific allergy requests indicated during reservation.",
+      "The first three hours of the event, starting at 11:00 AM, are planned with accommodations and movements. Then you'll have time to mingle, enjoy a glass of champagne with new friends, and experience the rest of what Body Poetry has to offer.",
   },
   {
-    question: "What happens in case of seasonal rain or cold weather?",
+    question: "Can I bring a friend?",
     answer:
-      "The sanctuary includes both the open-air cedar platform and our 18-inch climate-regulated rammed-earth pavilion with heated radiant hearths. The gathering proceeds in sheltered warmth regardless of the weather.",
+      "You will get a 20% discount on each ticket when you choose the \"Bring a Friend\" plan and buy your tickets together.",
+  },
+  {
+    question: "What happens if I'm late?",
+    answer:
+      "The event starts at 11:00 AM, and there will be a short grace period, but please try to arrive on time to avoid disturbing the class. If you expect to arrive late, please email us at haya@bodyxpoetry.com so we can accommodate you.",
   },
 ];
 

@@ -11,16 +11,23 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full bg-[#1C2716] text-[#FAF7F2]/80 py-16 px-6 sm:px-10 lg:px-16 border-t border-[#FAF7F2]/10 font-serif select-none">
+    <footer className="relative w-full bg-[#1C2716] text-[#FAF7F2]/80 py-8 sm:py-10 px-6 sm:px-10 lg:px-16 border-t border-[#FAF7F2]/10 font-serif select-none">
       {/* Organic Grain Texture Overlay */}
       <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-10 mix-blend-soft-light bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+')]" />
 
-      <div className="max-w-6xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="max-w-6xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-5 md:gap-8">
         {/* Brand identity */}
-        <div className="flex flex-col items-center md:items-start gap-1">
-          <span className="font-serif text-3xl sm:text-4xl text-[#FAF7F2] tracking-tight font-normal">
-            Body <span className="font-serif text-[0.8em] text-[#D4C5A9]">×</span> Poetry
-          </span>
+        <div className="flex flex-col items-center md:items-start gap-2">
+          {/* Same logo as the header, rendered white on the forest green */}
+          <img
+            src="/body_x_poetry_logo.png"
+            alt="Body × Poetry"
+            width={971}
+            height={188}
+            draggable={false}
+            className="block h-[clamp(22px,2.6vw,34px)] w-auto object-contain"
+            style={{ filter: "brightness(0) invert(1)" }}
+          />
           <span className="text-xs text-[#D4C5A9]/80 tracking-wider">
             Newport Beach, California
           </span>
