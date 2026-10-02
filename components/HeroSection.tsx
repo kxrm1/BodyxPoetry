@@ -6,14 +6,6 @@ import { ArrowRight } from "@phosphor-icons/react";
 
 const HERO_MORPH_ITEMS: MorphItem[] = [
   {
-    image: "/images/hero/hero-1.jpeg",
-    caption: "Mindful Movement & Somatic Flow",
-  },
-  {
-    image: "/images/hero/hero-3.jpeg",
-    caption: "Crystal Sound Bath",
-  },
-  {
     image: "/images/hero/hero-4.jpeg",
     caption: "Movement & Release",
   },
@@ -34,7 +26,7 @@ export default function HeroSection() {
       <div className="absolute top-[28%] right-[15%] w-[45vw] h-[45vw] rounded-full bg-matcha/15 blur-[150px] pointer-events-none" />
 
       <ScrollExpand
-        src="/images/hero/hero-1.jpeg"
+        src="/images/hero/hero-4.jpeg"
         alt="Mindful movement sanctuary at Body × Poetry"
         customMedia={
           <MorphSlider
