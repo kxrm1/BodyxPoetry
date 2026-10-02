@@ -10,12 +10,16 @@ const HERO_MORPH_ITEMS: MorphItem[] = [
     caption: "Mindful Movement & Somatic Flow",
   },
   {
-    image: "/images/hero/hero-2.jpeg",
-    caption: "Local Artisans & Adornment",
-  },
-  {
     image: "/images/hero/hero-3.jpeg",
     caption: "Crystal Sound Bath",
+  },
+  {
+    image: "/images/hero/hero-4.jpeg",
+    caption: "Movement & Release",
+  },
+  {
+    image: "/images/hero/hero-5.jpeg",
+    caption: "Soft Linen & Stillness",
   },
 ];
 
