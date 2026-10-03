@@ -56,7 +56,7 @@ export default function TicketSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
-              href="https://square.link/u/tr4WlrxY?src=sheet"
+              href="https://square.link/u/Yi4lovpm?src=sheet"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#FAF7F2] text-[#1C2716] hover:bg-[#D4C5A9] hover:text-[#1C2716] transition-all duration-300 font-serif font-medium uppercase tracking-[0.18em] text-sm cursor-pointer shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"

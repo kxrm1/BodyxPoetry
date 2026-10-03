@@ -84,7 +84,7 @@ export default function HeroSection() {
             className="max-w-3xl text-left select-none [will-change:transform,opacity,filter]"
           >
             <p className="font-serif font-display text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] text-cream leading-[1.08] tracking-tight font-normal [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]">
-              for the woman who holds everything together,
+              for the person who holds everything together,
               <br />
               this is your day to be held.
             </p>
