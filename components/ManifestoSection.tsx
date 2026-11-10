@@ -64,7 +64,7 @@ const renderPartnerLogo = (item: LogoItem) => {
 };
 
 const MANIFESTO_TEXT =
-  "on saturday, november 7, step away from everyday noise and into a private newport beach sanctuary made for your restoration. this intimate four-hour women's retreat invites you to slow down and reconnect with your body. your day includes gentle yoga, guided meditation, a sound bath, restorative treatments, acupuncture and a chef-prepared meal. between each experience, you'll have space to breathe, connect with our wellness partners, and enjoy having nowhere else to be. this is more than a wellness event. it is a full pause from the outside world, and a day to remember the woman beneath every role you carry.";
+  "on saturday, december 12, step away from everyday noise and into a private newport beach sanctuary made for your restoration. this intimate four-hour women's retreat invites you to slow down and reconnect with your body. your day includes gentle yoga, guided meditation, a sound bath, restorative treatments, acupuncture and a chef-prepared meal. between each experience, you'll have space to breathe, connect with our wellness partners, and enjoy having nowhere else to be. this is more than a wellness event. it is a full pause from the outside world, and a day to remember the woman beneath every role you carry.";
 
 export default function ManifestoSection() {
   const [mounted, setMounted] = useState(false);

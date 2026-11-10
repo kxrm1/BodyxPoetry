@@ -97,7 +97,7 @@ export default function HeroSection() {
               className="space-y-1 [will-change:transform,opacity,filter] [text-shadow:0_2px_16px_rgba(0,0,0,0.3)]"
             >
               <div className="flex items-center lg:justify-end gap-2.5 font-serif font-display text-lg sm:text-xl md:text-2xl text-sand tracking-tight">
-                <span>November 7</span>
+                <span>December 12</span>
                 <span className="text-sand/50 text-xs font-serif">·</span>
                 <span>Newport Beach, California</span>
               </div>
