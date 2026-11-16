@@ -42,6 +42,16 @@ export default function TicketSection() {
             initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6 font-serif text-3xl sm:text-4xl tracking-tight text-[#FAF7F2] drop-shadow-[0_2px_12px_rgba(28,39,22,0.45)]"
+          >
+            $500
+          </motion.p>
+
+          <motion.p
+            initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-xl mx-auto mb-8 font-serif font-light text-sm sm:text-base leading-relaxed text-[#FAF7F2]/90 drop-shadow-[0_1px_8px_rgba(28,39,22,0.5)]"
           >
@@ -56,7 +66,7 @@ export default function TicketSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
-              href="https://square.link/u/Yi4lovpm?src=sheet"
+              href="https://square.link/u/JVSveTs4?src=sheet"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#FAF7F2] text-[#1C2716] hover:bg-[#D4C5A9] hover:text-[#1C2716] transition-all duration-300 font-serif font-medium uppercase tracking-[0.18em] text-sm cursor-pointer shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
